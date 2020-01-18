@@ -13,7 +13,7 @@ Kubernetes kann nämlich beliebig Container je nach Auslastung der ausführenden
 
 ## Stateful und Stateless Applications
 
-Man spricht beim Betrieb von Datenbanken in Containern, die aufgrund ihrer Natur Daten persistent ablegen müssen, von Stateful Applications. _Stateless Applications_ sind das Gegenstück und weitaus einfacher für Kubernetes zu händeln. Eine _Stateless Application_ ist z.B. ein NGINX-Server, der eine schon fertig gebündelte Webseite bei Aufruf über seine URL im Browser ausliefern soll. Alles Relevante im NGINX-Container ist statisch und ändert sich nicht. Es werden keine neuen wichtigen Dokumente im Container erstellt, die persistiert werden müssen. Ein [Dockerfile](https://github.com/TinkeringAround/nginx-docker-k8s/blob/master/Dockerfile) für so ein Image ist entsprechend einfach und benötigt keine Anbindung zu externen Volumes oder Verzeichnisquellen für eine Persistierung.
+Man spricht beim Betrieb von Datenbanken in Containern, die aufgrund ihrer Natur Daten persistent ablegen müssen, von Stateful Applications. _Stateless Applications_ sind das Gegenstück und weitaus einfacher für Kubernetes zu händeln. Eine _Stateless Application_ ist z.B. ein NGINX-Server, der eine schon fertig gebündelte Website bei Aufruf über seine URL im Browser ausliefern soll. Alles Relevante im NGINX-Container ist statisch und ändert sich nicht. Es werden keine neuen wichtigen Dokumente im Container erstellt, die persistiert werden müssen. Ein [Dockerfile](https://github.com/TinkeringAround/nginx-docker-k8s/blob/master/Dockerfile) für so ein Image ist entsprechend einfach und benötigt keine Anbindung zu externen Volumes oder Verzeichnisquellen für eine Persistierung.
 
 ```Dockerfile
 # Small NGINX Base Image
@@ -104,7 +104,7 @@ spec:
   storageClassName: ionos-enterprise-hdd
 ```
 
-Wie bereits beschrieben sind provisionierte Volumes einer Storage Class unabhängig von jeglichen Workload im Kubernetes Cluster. Ein Container kann also kein Volume direkt _besitzen_, sondern lediglich ein Volume anfordern (claim). Kubernetes sorgt dann dafür, dass der Container beim Schreiben auf dieses externe Verzeichnis zugreifen kann und stellt dafür die notwendige Verbindung her. Wenn ein PVC erstellt wird und kein zugehöriges Volume existiert, wird dieses dynamisch provisioniert.
+Wie bereits beschrieben sind provisionierte Volumes einer Storage Class unabhängig von jeglichem Workload im Kubernetes Cluster. Ein Container kann also kein Volume direkt _besitzen_, sondern lediglich ein Volume anfordern (claim). Kubernetes sorgt dann dafür, dass der Container beim Schreiben auf dieses externe Verzeichnis zugreifen kann und stellt dafür die notwendige Verbindung her. Wenn ein PVC erstellt wird und kein zugehöriges Volume existiert, wird dieses dynamisch provisioniert.
 
 Pro partitioniertem Volume gibt es nur ein zugehöriges PVC. Dieses PVC kann aber von beliebig vielen Containern für einen lesenden und schreibenden Zugriff verwendet werden.
 
